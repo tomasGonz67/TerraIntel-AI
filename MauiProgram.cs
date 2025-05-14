@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using TerraIntel_lAI.Services;
 
 namespace TerraIntel_lAI
 {
@@ -15,7 +16,9 @@ namespace TerraIntel_lAI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
             builder.Services.AddSingleton<InfoItemDatabase>();
-            
+            builder.Services.AddSingleton<IAIService, AIService>();
+
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

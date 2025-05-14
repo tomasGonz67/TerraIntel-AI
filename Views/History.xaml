@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="TerraIntel_lAI.History"
+             Title="History">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <!-- Page header -->
+        <Label
+      Text="Your History"
+      Style="{StaticResource Headline}"
+      HorizontalOptions="Center" />
+
+        <!-- CollectionView to display each InfoItem -->
+        <CollectionView
+      ItemsSource="{Binding Items}"
+      SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:InfoItem">
+                    <Grid Padding="10" ColumnDefinitions="*,Auto">
+
+                        <!-- The saved text -->
+                        <Label
+              Text="{Binding Name}"
+              Grid.Column="0"
+              VerticalOptions="Center" />
+
+                        <!-- Delete button -->
+                        <Button
+              Text="Delete"
+              Grid.Column="1"
+                Command="{Binding Path=BindingContext.DeleteCommand,
+                    Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                CommandParameter="{Binding .}"
+                VerticalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentPage>

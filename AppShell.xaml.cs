@@ -5,7 +5,8 @@
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(TestFile), typeof(TestFile));
+            Routing.RegisterRoute(nameof(History), typeof(History));
+            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
         }
     }
 }
