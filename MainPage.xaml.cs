@@ -1,14 +1,18 @@
-﻿namespace TerraIntel_lAI
+﻿using OpenAI.Chat;      // for ChatClient & ChatCompletion
+
+namespace TerraIntel_lAI
 {
     public partial class MainPage : ContentPage
     {
         int count = 0;
         private CancellationTokenSource _cancelTokenSource;
         private bool _isCheckingLocation;
+        private string apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
         public MainPage()
         {
             InitializeComponent();
         }
+
         private async void OnNavigateToTestFile(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(nameof(TestFile));
@@ -18,7 +22,7 @@
             count++;
 
             if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
+                CounterBtn.Text = $"Clicked {apiKey} time";
             else
                 CounterBtn.Text = $"Clicked {count} times";
 
@@ -30,10 +34,40 @@
             await GetCurrentLocation();
         }
 
+        public async Task DisplayAI(double lat, double lon)
+        {
+            try
+            {
+                string prompt =
+$"Give me an interesting historical fact about the location at coordinates {lat}, {lon}. Start it off with 'You are currenty located at 'Name of area:'. Then give an interesting fact.";
+                cords.Text = "test1";
+                // Instantiate the official ChatClient
+                var client = new ChatClient(
+                    model: "gpt-4.1",      // or "gpt-3.5-turbo", etc.
+                    apiKey: apiKey
+                );
+                
+                // Async call into the API
+                ChatCompletion completion =
+                    await client.CompleteChatAsync(prompt);  // :contentReference[oaicite:1]{index=1}
+
+                // Extract and show the result
+                string fact = completion.Content[0].Text.Trim();
+                cords.Text = fact;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                cords.Text = $"❌ {ex.GetType().Name}: {ex.Message}";
+            }
+
+            }
+
         public async Task GetCurrentLocation()
         {
             try
             {
+
                 _isCheckingLocation = true;
 
                 GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
@@ -46,7 +80,7 @@
                 {
                     double lat = location.Latitude;
                     double lon = location.Longitude;
-                    cords.Text = lat.ToString() + " " + lon.ToString() + " " + location.Altitude.ToString();
+                    await DisplayAI(lat,lon);
                 }
 
             }

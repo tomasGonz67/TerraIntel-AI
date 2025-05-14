@@ -15,6 +15,7 @@ namespace TerraIntel_lAI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
             builder.Services.AddSingleton<InfoItemDatabase>();
+            
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
