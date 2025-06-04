@@ -1,6 +1,6 @@
 # TerraIntelAI - Sends your coordinates to OpenAPI then stores it in sqlLite db.
 
-### Tech Stack: .Net MAUI, SQLite DB, CommunityToolkit.Mvvm (for Model->viewmodel), OpenAI .NET SDK, API->v1/chat/completions, MVVM architecture.
+### Tech Stack + Libraries + Architecture: .Net MAUI, SQLite DB, CommunityToolkit.Mvvm (for Model->viewmodel), OpenAI .NET SDK, MVVM architecture.
 
 #### Calls OpenAI for a location-based fact, then returns that fact to a user.
 
